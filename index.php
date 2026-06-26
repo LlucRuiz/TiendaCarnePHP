@@ -11,7 +11,7 @@ require __DIR__ . '/includes/header.php';
 <section class="hero">
     <div class="hero-copy">
         <span class="eyebrow">Carnicería online artesanal</span>
-        <h1>Carne Manolo para comprar bien, sin rodeos.</h1>
+        <h1>Carne Manolo Toda la carne del Mercado (No vendemos carne Humana)</h1>
         <p><?php echo htmlspecialchars($store['description']); ?></p>
         <div class="hero-actions">
             <a class="button button-primary" href="productos.php">Ver catálogo</a>
