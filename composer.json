@@ -1,0 +1,30 @@
+{
+    "name": "carnemanolo/tienda",
+    "description": "Sistema de tienda online de carnes con panel admin y pagos Stripe",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.4",
+        "stripe/stripe-php": "^10.0",
+        "tecnickcom/tcpdf": "^6.4"
+    },
+    "require-dev": {
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "CarneManolo\\": "src/"
+        },
+        "files": [
+            "includes/app.php",
+            "includes/functions.php",
+            "includes/admin-functions.php",
+            "includes/payment-functions.php",
+            "includes/invoice-functions.php"
+        ]
+    },
+    "scripts": {
+        "create-admin": "php admin/create-user.php",
+        "serve": "php -S localhost:8000"
+    }
+}

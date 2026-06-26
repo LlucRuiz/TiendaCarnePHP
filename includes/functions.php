@@ -68,6 +68,32 @@ function initialize_database(PDO $connection, array $seedProducts): void
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci'
     );
 
+    $connection->exec(
+        'CREATE TABLE IF NOT EXISTS admins (
+            id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            username VARCHAR(80) NOT NULL UNIQUE,
+            password_hash VARCHAR(255) NOT NULL,
+            email VARCHAR(160) NOT NULL,
+            active TINYINT(1) NOT NULL DEFAULT 1,
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci'
+    );
+
+    $connection->exec(
+        'CREATE TABLE IF NOT EXISTS payments (
+            id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            order_id INT UNSIGNED NOT NULL UNIQUE,
+            stripe_session_id VARCHAR(255) NOT NULL UNIQUE,
+            status VARCHAR(30) NOT NULL DEFAULT "pending",
+            amount_cents INT UNSIGNED NOT NULL,
+            payment_method VARCHAR(50) NULL,
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            paid_at TIMESTAMP NULL,
+            CONSTRAINT fk_payments_order FOREIGN KEY (order_id) REFERENCES orders (id)
+                ON DELETE CASCADE ON UPDATE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci'
+    );
+
     if (!empty($seedProducts)) {
         $count = (int) $connection->query('SELECT COUNT(*) FROM products')->fetchColumn();
 
